@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}Leave a Review - Nexus WeFix{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+        <div class="card glass-card border-0 shadow-sm p-5 mt-4">
+            <div class="text-center mb-4">
+                <div class="bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3"
+                    style="width: 80px; height: 80px; font-size: 2rem;">
+                    <i class="fas fa-star"></i>
+                </div>
+                <h2 class="fw-bold">Rate Your Experience</h2>
+                <p class="text-muted">How was the service provided by {{ booking.worker.user.first_name }}?</p>
+            </div>
+
+            <div class="p-3 bg-light rounded-3 mb-4 text-center">
+                <h6 class="mb-1 text-primary fw-bold">{{ booking.service.name }}</h6>
+                <small class="text-muted">Completed on {{ booking.updated_at|date:"M d, Y" }}</small>
+            </div>
+
+            <form method="post">
+                {% csrf_token %}
+                {{ form|crispy }}
+                <div class="d-grid gap-2 mt-4">
+                    <button type="submit" class="btn btn-primary rounded-pill fw-bold py-2">Submit Review</button>
+                    <a href="{% url 'bookings:dashboard' %}" class="btn btn-light rounded-pill fw-bold py-2">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

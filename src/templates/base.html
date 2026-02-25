@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Nexus WeFix{% endblock %}</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@600;700;800&display=swap"
+        rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <!-- HTMX -->
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+    {% block extra_head %}{% endblock %}
+</head>
+
+<body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
+    <div class="bg-white border-bottom shadow-sm sticky-top mt-0 pt-3">
+        <!-- Top Row: Branding & Auth -->
+        <div class="container d-flex justify-content-between align-items-center mb-3">
+            <!-- Branding -->
+            <a class="navbar-brand fw-bold fs-4 m-0" href="/"
+                style="font-family: var(--font-heading); color: var(--primary-color); text-decoration: none;">
+                NEXUS WEFIX
+            </a>
+
+            <!-- Auth Actions (Right Aligned) -->
+            <div class="d-flex align-items-center">
+                {% if user.is_authenticated %}
+                <form method="post" action="{% url 'account_logout' %}" class="m-0">
+                    {% csrf_token %}
+                    <button type="submit"
+                        class="btn btn-outline-danger btn-sm rounded-pill fw-bold px-4">Logout</button>
+                </form>
+                {% else %}
+                <a href="/accounts/login/"
+                    class="btn btn-outline-primary btn-sm rounded-pill fw-bold px-4 me-2">Login</a>
+                <a href="/accounts/signup/" class="btn btn-primary btn-sm rounded-pill fw-bold px-4">Register</a>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Bottom Row: Navigation Tabs (Only if logged in) -->
+        {% if user.is_authenticated %}
+        <div class="container pb-0">
+            <ul class="nav nav-tabs border-bottom-0 d-flex align-items-center justify-content-center" style="margin-bottom: -1px; gap: 5px;">
+                <li class="nav-item">
+                    <a class="nav-link fw-bold px-4 {% if request.path == '/workers/' %}active text-primary border-bottom-0{% else %}text-muted{% endif %}"
+                        href="/workers/" style="border-radius: 6px 6px 0 0;">Professionals</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link fw-bold px-4 {% if request.path == '/dashboard/' and request.GET.tab != 'requests' %}active text-primary border-bottom-0{% else %}text-muted{% endif %}"
+                        href="/dashboard/" style="border-radius: 6px 6px 0 0;">Bookings</a>
+                </li>
+                {% if user.worker_profile and user.worker_profile.skills %}
+                <li class="nav-item">
+                    <a class="nav-link fw-bold px-4 {% if request.path == '/dashboard/' and request.GET.tab == 'requests' %}active text-primary border-bottom-0{% else %}text-muted{% endif %}"
+                        href="/dashboard/?tab=requests" style="border-radius: 6px 6px 0 0;">Requests</a>
+                </li>
+                {% endif %}
+                <li class="nav-item">
+                    <a class="nav-link fw-bold px-4 {% if request.path == '/profile/' %}active text-primary border-bottom-0{% else %}text-muted{% endif %}"
+                        href="/profile/" style="border-radius: 6px 6px 0 0;">Profile</a>
+                </li>
+            </ul>
+        </div>
+        {% endif %}
+    </div>
+
+    <main class="container mt-4">
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endfor %}
+        {% endif %}
+
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="bg-light py-4 mt-5">
+        <div class="container text-center">
+            <p class="text-muted mb-0">&copy; 2026 Nexus WeFix. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+
+</html>

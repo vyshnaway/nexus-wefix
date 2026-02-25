@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}Professional Profile - Nexus WeFix{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+        <div class="card glass-card p-5 border-0 shadow-lg mt-4">
+            <h2 class="mb-4 text-center">Complete Your Profile</h2>
+
+            <div class="alert alert-info border-0 shadow-sm d-flex align-items-center mb-4">
+                <i class="fas fa-info-circle fs-4 me-3"></i>
+                <small>Once your profile is completed, you will be listed in the Nexus WeFix catalog and can start
+                    receiving booking requests.</small>
+            </div>
+
+            <form method="post">
+                {% csrf_token %}
+                {{ form|crispy }}
+                <div class="d-grid mt-4">
+                    <button type="submit" class="btn btn-primary btn-lg rounded-pill fw-bold">Save Profile</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

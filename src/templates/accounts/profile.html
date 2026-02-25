@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}My Profile - Nexus WeFix{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-12">
+        <h2 class="display-6">My Profile</h2>
+        <p class="text-muted">Manage your personal information and professional services.</p>
+    </div>
+</div>
+
+<div class="row g-4">
+    <!-- Personal Information Section -->
+    <div class="col-lg-6">
+        <div class="card glass-card border-0 shadow-sm p-4 h-100">
+            <h4 class="mb-4 d-flex align-items-center">
+                <i class="fas fa-user-circle text-primary me-2"></i> Personal Information
+            </h4>
+            <form method="post" action="{% url 'accounts:profile' %}">
+                {% csrf_token %}
+                <input type="hidden" name="update_user" value="1">
+                {{ user_form|crispy }}
+                <div class="d-grid mt-4">
+                    <button type="submit" class="btn btn-primary rounded-pill fw-bold">Save Personal Info</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Professional Profile Section -->
+    <div class="col-lg-6">
+        <div class="card glass-card border-0 shadow-sm p-4 h-100">
+            <h4 class="mb-4 d-flex align-items-center">
+                <i class="fas fa-tools text-success me-2"></i> Professional Services
+            </h4>
+
+            {% if user.user_type != 'worker' %}
+            <div class="alert alert-info border-0 shadow-sm mb-4">
+                <i class="fas fa-lightbulb me-2"></i> Want to offer your services? Fill out this section to become a
+                verified professional on Nexus WeFix.
+            </div>
+            {% elif not has_skills %}
+            <div class="alert alert-warning border-0 shadow-sm mb-4">
+                <i class="fas fa-exclamation-triangle me-2"></i> Your professional profile is incomplete. Please add
+                your skills and rate to be listed.
+            </div>
+            {% endif %}
+
+            <form method="post" action="{% url 'accounts:profile' %}">
+                {% csrf_token %}
+                <input type="hidden" name="update_worker" value="1">
+                {{ worker_form|crispy }}
+                <div class="d-grid mt-4">
+                    <button type="submit" class="btn btn-success rounded-pill fw-bold">Save Professional Info</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

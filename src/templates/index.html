@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+{% load static %}
+{% load custom_filters %}
+
+{% block title %}Nexus WeFix - Skilled Services for Modern Living{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-gradient">
+    <div class="row align-items-center g-5">
+        <div class="col-lg-6 animate-fade-in">
+            <h6 class="text-uppercase fw-bold text-primary mb-3 ls-wider">Urban Services Reimagined</h6>
+            <h1 class="hero-title mb-4">Connect with Skilled Workers in Seconds.</h1>
+            <p class="lead text-muted mb-5">From expert masons to professional painters, Nexus WeFix brings qualified
+                tradespeople right to your doorstep.</p>
+            {% if not user.is_authenticated %}
+            <div class="d-flex flex-wrap gap-3">
+                <a href="/accounts/signup/" class="btn btn-primary btn-lg px-4 py-3 rounded-pill fw-bold shadow-lg">
+                    <i class="fas fa-search me-2"></i>Find a Pro
+                </a>
+                <a href="/accounts/signup/" class="btn btn-outline-dark btn-lg px-4 py-3 rounded-pill fw-bold">
+                    Become a Partner
+                </a>
+            </div>
+            {% else %}
+            <div class="d-flex flex-wrap gap-3">
+                <a href="{% url 'workers:worker_list' %}"
+                    class="btn btn-outline-dark btn-lg px-4 py-3 rounded-pill fw-bold">
+                    Browse Workers
+                </a>
+            </div>
+            {% endif %}
+        </div>
+        <div class="col-lg-6 hero-image-container animate-fade-in" style="animation-delay: 0.2s;">
+            <img src="{% static 'images/hero_image.png' %}" alt="Professional Trade Service" class="img-fluid w-100">
+            <div class="glass-card p-4 position-absolute bottom-0 start-0 translate-middle-y ms-2 d-none d-md-block"
+                style="z-index: 10;">
+                <div class="d-flex align-items-center gap-3">
+                    <div class="bg-success text-white p-3 rounded-circle">
+                        <i class="fas fa-check"></i>
+                    </div>
+                    <div>
+                        <h6 class="mb-0 fw-bold">Verified Partners</h6>
+                        <small class="text-muted">100% Safety Guarantee</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Services Grid -->
+<section class="mt-5 pt-5">
+    <div class="text-center mb-5">
+        <h2 class="display-5">Project Specializations</h2>
+        <p class="text-muted">Comprehensive solutions for every urban home and construction need.</p>
+    </div>
+    <div class="row g-4">
+        {% for category in "Masonry,Carpentry,Plumbing,Painting,Electrical,HVAC"|split:"," %}
+        <div class="col-md-4">
+            <div class="card glass-card category-card p-4 h-100 border-0">
+                <div class="category-icon">
+                    <i class="fas {% cycle 'fa-hammer' 'fa-chair' 'fa-faucet' 'fa-palette' 'fa-bolt' 'fa-wind' %}"></i>
+                </div>
+                <h4 class="fw-bold mb-3">{{ category }}</h4>
+                <p class="text-muted mb-4 small">Professional solutions delivered by certified experts in {{ category }}
+                    services.</p>
+                <a href="{% url 'workers:worker_list' %}?category={{ category }}"
+                    class="mt-auto text-primary fw-bold text-decoration-none">Learn More <i
+                        class="fas fa-arrow-right ms-1"></i></a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- Presentation CTA -->
+<section class="cta-section animate-fade-in" style="animation-delay: 0.6s;">
+    <div class="row g-5 align-items-center">
+        <div class="col-lg-8">
+            <h2 class="display-6 mb-4">Ready to simplify your home maintenance?</h2>
+            <p class="lead opacity-75 mb-0">Join thousands of users who trust Nexus WeFix for their urban construction
+                and repair needs.</p>
+        </div>
+        <div class="col-lg-4 text-center">
+            <a href="/accounts/signup/" class="btn btn-primary btn-lg px-5 py-3 rounded-pill fw-bold">Get Started
+                Now</a>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_head %}
+<style>
+    .ls-wider {
+        letter-spacing: 0.1em;
+    }
+</style>
+{% endblock %}
+ 

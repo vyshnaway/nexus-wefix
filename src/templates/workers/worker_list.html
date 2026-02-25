@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% block title %}Browse Professionals - Nexus WeFix{% endblock %}
+{% block content %}
+<div class="row mb-5 align-items-center">
+    <div class="col-md-8">
+        <h2 class="display-6">Our Verified Professionals</h2>
+        <p class="text-muted">Find the right expert for your urban service needs.</p>
+    </div>
+    <div class="col-md-4 text-md-end">
+        <form method="get" class="d-flex">
+            <select id="skillFilter" name="category" class="form-select me-2 fw-bold text-muted"
+                onchange="this.form.submit()">
+                <option value="">Filter by Skill (All)</option>
+                {% for skill in all_skills %}
+                <option value="{{ skill }}">{{ skill }}</option>
+                {% endfor %}
+            </select>
+            <script>
+                document.getElementById('skillFilter').value = "{{ category|escapejs }}";
+            </script>
+            <button class="btn btn-primary fw-bold" type="submit">Filter</button>
+        </form>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="row g-4">
+            {% for worker in workers %}
+            {% with u=worker.user rate=worker.hourly_rate %}
+            <div class="col-md-6 col-lg-4">
+                <div class="card glass-card h-100 border-0 p-4">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <div class="d-flex align-items-center gap-3">
+                            <div class="bg-primary text-white p-3 rounded-circle d-flex align-items-center justify-content-center"
+                                style="width: 50px; height: 50px;">
+                                <span class="fs-4 fw-bold">{{ u.first_name.0 }}{{ u.last_name.0 }}</span>
+                            </div>
+                            <div>
+                                <h5 class="mb-0 fw-bold">{{ u.first_name }} {{ u.last_name }}</h5>
+                                <small class="text-success"><i class="fas fa-check-circle me-1"></i>Verified</small>
+                            </div>
+                        </div>
+                        <div class="bg-light px-2 py-1 rounded">
+                            <i class="fas fa-star text-warning"></i>
+                            <span class="fw-bold">
+                                {% if worker.avg_rating %}
+                                {{ worker.avg_rating|floatformat:1 }}
+                                {% else %}
+                                New
+                                {% endif %}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <p class="mb-1 text-muted small"><i class="fas fa-map-marker-alt me-2"></i>{{ worker.location }}
+                        </p>
+                        <p class="mb-1 text-muted small"><i class="fas fa-money-bill-wave me-2"></i>Rs. {{ rate }} / hr
+                        </p>
+                    </div>
+                    <div class="mb-4">
+                        <h6 class="small text-uppercase fw-bold text-muted mb-2">Skills</h6>
+                        <div class="d-flex flex-wrap gap-2">
+                            {% for skill in worker.skills %}
+                            <span class="badge bg-light text-dark border">{{ skill }}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <a href="/request/{{ worker.id }}/" class="btn btn-primary w-100 fw-bold rounded-pill shadow-sm">
+                        Request Service </a>
+                </div>
+            </div>
+            {% endwith %}
+            {% empty %}
+            <div class="col-12 text-center py-5">
+                <i class="fas fa-search-minus fa-3x text-muted mb-3"></i>
+                <h4 class="text-muted">No professionals found.</h4>
+                <a href="{% url 'workers:worker_list' %}" class="btn btn-outline-primary mt-3">Clear Search</a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
