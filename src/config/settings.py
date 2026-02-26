@@ -48,7 +48,7 @@ MIDDLEWARE = [
     'allauth.account.middleware.AccountMiddleware',
 ]
 
-ROOT_URLCONF = 'nexus.urls'
+ROOT_URLCONF = 'config.urls'
 
 TEMPLATES = [{
     'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -67,7 +67,7 @@ TEMPLATES = [{
     },
 }]
 
-WSGI_APPLICATION = 'nexus.wsgi.application'
+WSGI_APPLICATION = 'config.wsgi.application'
 
 # Database
 import dj_database_url
