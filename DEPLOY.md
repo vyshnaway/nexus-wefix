@@ -15,7 +15,7 @@ You will also need **Docker** and **Docker Compose**. Choose your operating syst
 
 ## 2. Install Docker
 
-### 🐧 Linux (Ubuntu/Debian)
+### Linux (Ubuntu/Debian)
 1. Update your packages:
    ```bash
    sudo apt-get update
@@ -35,12 +35,12 @@ You will also need **Docker** and **Docker Compose**. Choose your operating syst
    ```
    *(Note: You may need to log out and log back in for this to take effect.)*
 
-### 🍏 macOS
+### macOS
 1. Download **Docker Desktop for Mac**: [https://docs.docker.com/desktop/install/mac-install/](https://docs.docker.com/desktop/install/mac-install/)
 2. Open the downloaded `.dmg` file and drag the Docker icon into your Applications folder.
 3. Open Docker from your Applications folder to ensure the Docker daemon is running in the background. (Docker Compose comes pre-installed with Docker Desktop).
 
-### 🪟 Windows
+### Windows
 1. We highly recommend installing **WSL 2** (Windows Subsystem for Linux) first. Open PowerShell as Administrator and run:
    ```powershell
    wsl --install
