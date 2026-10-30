@@ -52,25 +52,25 @@
         <!-- Bottom Row: Navigation Tabs (Only if logged in) -->
         {% if user.is_authenticated %}
         <div class="container pb-0">
-            <ul class="nav nav-tabs border-bottom-0 d-flex align-items-center justify-content-center" style="margin-bottom: -1px; gap: 5px;">
+            <ul class="nav nav-tabs border-bottom-0 d-flex align-items-center justify-content-center"
+                style="margin-bottom: -1px; gap: 5px;">
                 <li class="nav-item">
                     <a class="nav-link fw-bold px-4 {% if request.path == '/workers/' %}active text-primary border-bottom-0{% else %}text-muted{% endif %}"
-                        href="/workers/" style="border-radius: 6px 6px 0 0;">Professionals</a>
+                        href="/workers/" style="border-radius: 6px 6px 0 0;">Workers</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link fw-bold px-4 {% if request.path == '/dashboard/' and request.GET.tab != 'requests' %}active text-primary border-bottom-0{% else %}text-muted{% endif %}"
-                        href="/dashboard/" style="border-radius: 6px 6px 0 0;">Bookings</a>
+                    <a class="nav-link fw-bold px-4 {% if request.path == '/bookings/' %}active text-primary border-bottom-0{% else %}text-muted{% endif %}"
+                        href="{% url 'bookings:dashboard' %}" style="border-radius: 6px 6px 0 0;">Bookings</a>
                 </li>
-                {% if user.worker_profile and user.worker_profile.skills %}
-                <li class="nav-item">
-                    <a class="nav-link fw-bold px-4 {% if request.path == '/dashboard/' and request.GET.tab == 'requests' %}active text-primary border-bottom-0{% else %}text-muted{% endif %}"
-                        href="/dashboard/?tab=requests" style="border-radius: 6px 6px 0 0;">Requests</a>
-                </li>
-                {% endif %}
-                <li class="nav-item">
-                    <a class="nav-link fw-bold px-4 {% if request.path == '/profile/' %}active text-primary border-bottom-0{% else %}text-muted{% endif %}"
-                        href="/profile/" style="border-radius: 6px 6px 0 0;">Profile</a>
-                </li>
+                {% if user.worker_profile and user.worker_profile.skills %} <li class="nav-item">
+                    <a class="nav-link fw-bold px-4 {% if request.path == '/requests/' %}active text-primary border-bottom-0{% else %}text-muted{% endif %}"
+                        href="{% url 'bookings:requests' %}" style="border-radius: 6px 6px 0 0;">Requests</a>
+                    </li>
+                    {% endif %}
+                    <li class="nav-item">
+                        <a class="nav-link fw-bold px-4 {% if request.path == '/profile/' %}active text-primary border-bottom-0{% else %}text-muted{% endif %}"
+                            href="/profile/" style="border-radius: 6px 6px 0 0;">Profile</a>
+                    </li>
             </ul>
         </div>
         {% endif %}

@@ -15,7 +15,7 @@
 </div>
 {% endif %}
 
-{% if request.GET.tab == 'requests' and has_profile %}
+{% if request.path == '/requests/' and has_profile %}
 <div class="row mb-4 align-items-center">
     <div class="col-md-12">
         <h2 class="display-6">Service Requests</h2>

@@ -45,6 +45,27 @@ Detailed instructions for installing Docker and deploying the application across
    - Web App: [http://localhost:8000](http://localhost:8000)
    - Admin Panel: [http://localhost:8000/admin](http://localhost:8000/admin)
 
+### Run Locally Without Docker (Windows)
+
+Install Python 3.11 and open PowerShell in the project folder. Run:
+
+```powershell
+.\run-local.ps1
+```
+
+The script creates a `.venv`, installs the requirements, initializes a local SQLite database, and starts the app at [http://localhost:8000](http://localhost:8000). The first run needs an internet connection to install dependencies. To also create demo accounts and data, run:
+
+```powershell
+.\run-local.ps1 -CreateDemoData
+```
+
+Stop the server with `Ctrl+C`.
+If PowerShell blocks the script, run it with:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\run-local.ps1
+```
+
 ## Project Structure
 
 ```

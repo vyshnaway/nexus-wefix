@@ -10,7 +10,7 @@ from apps.workers.models import WorkerProfile
 class BookingCreateView(LoginRequiredMixin, CreateView):
     model = Booking
     form_class = BookingRequestForm
-    template_name = 'bookings/request.html'
+    template_name = 'request/index.html'
     success_url = reverse_lazy('bookings:dashboard')
 
     def get_context_data(self, **kwargs):
@@ -33,7 +33,7 @@ class BookingCreateView(LoginRequiredMixin, CreateView):
 
 class BookingDashboardView(LoginRequiredMixin, ListView):
     model = Booking
-    template_name = 'bookings/dashboard.html'
+    template_name = 'bookings/index.html'
     context_object_name = 'bookings'
 
     def get_context_data(self, **kwargs):
@@ -91,7 +91,7 @@ class BookingStatusUpdateView(LoginRequiredMixin, View):
         booking.save()
         
         if is_worker:
-            return redirect('/dashboard/?tab=requests')
+            return redirect('bookings:requests')
         return redirect('bookings:dashboard')
 
 class ReviewCreateView(LoginRequiredMixin, CreateView):
